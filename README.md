@@ -18,8 +18,8 @@ Implementar el **patrón Factory Method** en un contexto práctico:
 
 ---
 
-## 🏗️ Arquitectura del proyecto
-
+## 🏗️ Arquitectura del proyecto##
+```
 Sistema-de-Transporte/
 │
 ├── main.py # Menú CRUD por consola
@@ -35,6 +35,7 @@ Sistema-de-Transporte/
 │
 └── interfaz/ # Interfaz gráfica (Tkinter)
 └── interfaz_envios.py
+```
 ---
 
 ## ⚙️ Instalación y ejecución
