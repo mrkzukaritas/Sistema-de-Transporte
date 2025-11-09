@@ -20,7 +20,7 @@ class Transporte(ABC):
 # ----- Productos concretos -----
 class Camion(Transporte):
     def entregar(self):
-        return "🚚 Entrega por carretera en camión."
+        return "Camion"
 
     def obtener_costo(self):
         return 50000
@@ -31,7 +31,7 @@ class Camion(Transporte):
 
 class Barco(Transporte):
     def entregar(self):
-        return "🚢 Entrega por mar en barco."
+        return "Barco"
 
     def obtener_costo(self):
         return 120000
@@ -42,7 +42,7 @@ class Barco(Transporte):
 
 class Avion(Transporte):
     def entregar(self):
-        return "✈️ Entrega por aire en avión."
+        return "Avion"
 
     def obtener_costo(self):
         return 200000
