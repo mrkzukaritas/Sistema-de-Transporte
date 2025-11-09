@@ -16,28 +16,43 @@ class InterfazEnvios:
         self.destino = tk.StringVar()
 
         # ======== FRAME SUPERIOR ==========
-        frame_form = tk.Frame(root, bg="#f4f4f4")
+        frame_form = tk.Frame(root)
         frame_form.pack(pady=10)
 
         tk.Label(frame_form, text="Selecciona el tipo de envío:", bg="#f4f4f4", font=("Arial", 10, "bold")).grid(row=0, column=0, columnspan=3, pady=5)
 
         # Botones de tipo
-        tk.Button(frame_form, text="Terrestre", width=12, command=lambda: self.seleccionar_tipo("terrestre")).grid(row=1, column=0, padx=5)
-        tk.Button(frame_form, text="Marítima", width=12, command=lambda: self.seleccionar_tipo("maritima")).grid(row=1, column=1, padx=5)
-        tk.Button(frame_form, text="Aérea", width=12, command=lambda: self.seleccionar_tipo("aerea")).grid(row=1, column=2, padx=5)
+        self.botones_tipo = {}
 
+        self.botones_tipo["terrestre"] = tk.Button(
+            frame_form, text="Terrestre", width=12,
+            command=lambda: self.seleccionar_tipo("terrestre")
+        )
+        self.botones_tipo["terrestre"].grid(row=1, column=0, padx=5)
+
+        self.botones_tipo["maritima"] = tk.Button(
+            frame_form, text="Marítima", width=12,
+            command=lambda: self.seleccionar_tipo("maritima")
+        )
+        self.botones_tipo["maritima"].grid(row=1, column=1, padx=5)
+
+        self.botones_tipo["aerea"] = tk.Button(
+            frame_form, text="Aérea", width=12,
+            command=lambda: self.seleccionar_tipo("aerea")
+        )
+        self.botones_tipo["aerea"].grid(row=1, column=2, padx=5)
         tk.Label(frame_form, text="Destino:", bg="#f4f4f4").grid(row=2, column=0, columnspan=3, pady=(10, 2))
         tk.Entry(frame_form, textvariable=self.destino, width=40).grid(row=3, column=0, columnspan=3)
 
-        tk.Button(frame_form, text="Crear Envío", bg="#4CAF50", fg="white", width=20, command=self.crear_envio).grid(row=4, column=0, columnspan=3, pady=10)
+        tk.Button(frame_form, text="Crear Envío", width=20, command=self.crear_envio).grid(row=4, column=0, columnspan=3, pady=10)
 
         # ======== BOTONES CRUD ==========
         frame_botones = tk.Frame(root, bg="#f4f4f4")
         frame_botones.pack()
 
-        tk.Button(frame_botones, text="Actualizar Estado", bg="#2196F3", fg="white", width=18, command=self.mostrar_botones_estado).grid(row=0, column=0, padx=10)
-        tk.Button(frame_botones, text="Eliminar Envío", bg="#E53935", fg="white", width=18, command=self.eliminar_envio).grid(row=0, column=1, padx=10)
-        tk.Button(frame_botones, text="Refrescar Lista", bg="#9E9E9E", fg="white", width=18, command=self.refrescar_tabla).grid(row=0, column=2, padx=10)
+        tk.Button(frame_botones, text="Actualizar Estado", width=18, command=self.mostrar_botones_estado).grid(row=0, column=0, padx=10)
+        tk.Button(frame_botones, text="Eliminar Envío", width=18, command=self.eliminar_envio).grid(row=0, column=1, padx=10)
+        tk.Button(frame_botones, text="Refrescar Lista",width=18, command=self.refrescar_tabla).grid(row=0, column=2, padx=10)
 
         # ======== TABLA ==========
         columnas = ("ID", "Tipo", "Destino", "Estado", "Costo", "Tiempo")
@@ -49,9 +64,18 @@ class InterfazEnvios:
 
     # ===================== FUNCIONES =====================
 
+
     def seleccionar_tipo(self, tipo):
-        """Guarda el tipo seleccionado y muestra un mensaje."""
+        """Guarda el tipo seleccionado y resalta el botón elegido con un tono más oscuro."""
         self.tipo_seleccionado.set(tipo)
+
+        # Resetear todos los botones a su color normal
+        for b in self.botones_tipo.values():
+            b.config(bg="#f0f0f0", relief="raised")
+
+        # Resaltar el botón seleccionado con un gris más oscuro y borde hundido
+        self.botones_tipo[tipo].config(bg="#d0d0d0", relief="sunken")
+
         #messagebox.showinfo("Tipo seleccionado", f"Has seleccionado envío {tipo.capitalize()}")
 
     def crear_envio(self):
@@ -67,9 +91,12 @@ class InterfazEnvios:
         #messagebox.showinfo("Éxito", f"Envío {tipo.capitalize()} creado correctamente.")
         self.refrescar_tabla()
 
-        # Limpiar campos
+        # 🔹 Limpiar campos y desmarcar botón seleccionado
         self.tipo_seleccionado.set("")
         self.destino.set("")
+        for b in self.botones_tipo.values():
+            b.config(bg="#f0f0f0", relief="raised")
+
 
     def refrescar_tabla(self):
         """Actualiza la tabla con los envíos actuales."""
@@ -77,6 +104,9 @@ class InterfazEnvios:
             self.tabla.delete(row)
         for e in self.manager.envios:
             self.tabla.insert("", "end", values=(e.id_envio, e.tipo, e.destino, e.estado, e.costo, e.tiempo))
+        for b in self.botones_tipo.values():
+            b.config(bg="#f0f0f0", relief="raised")
+        self.tipo_seleccionado.set("")
 
     def mostrar_botones_estado(self):
         """Muestra botones de actualización de estado dinámicos."""
