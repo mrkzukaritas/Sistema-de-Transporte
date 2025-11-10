@@ -27,10 +27,10 @@ def menu():
             id_envio = int(input("ID del envío a eliminar: "))
             manager.eliminar_envio(id_envio)
         elif opcion == "5":
-            print("👋 Saliendo del sistema.")
+            print("Saliendo del sistema.")
             break
         else:
-            print("⚠️ Opción no válida.")
+            print("Opción no válida.")
 
 if __name__ == "__main__":
     menu()
