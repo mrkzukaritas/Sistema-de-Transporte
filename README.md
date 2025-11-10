@@ -44,3 +44,8 @@ Sistema-de-Transporte/
 ```bash
 git clone https://github.com/tuusuario/Sistema-de-Transporte.git
 cd Sistema-de-Transporte
+```
+### 🔹 2. Ejecutar Interfaz
+```bash
+python -m interfaz.interfaz_envios 
+```
