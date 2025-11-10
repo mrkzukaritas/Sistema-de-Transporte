@@ -16,7 +16,7 @@ class EnvioManager:
         elif tipo == "aerea":
             logistica = LogisticaAerea()
         else:
-            print("⚠️ Tipo de envío no válido.")
+            print("Tipo de envío no válido.")
             return
 
         transporte = logistica.crear_transporte()
@@ -29,12 +29,12 @@ class EnvioManager:
             transporte.obtener_tiempo()
         )
         self.envios.append(envio)
-        print(f"✅ Envío #{self.contador} creado correctamente.")
+        print(f"Envío #{self.contador} creado correctamente.")
         self.contador += 1
 
     def listar_envios(self):
         if not self.envios:
-            print("📭 No hay envíos registrados.")
+            print("No hay envíos registrados.")
             return
         for e in self.envios:
             print(f"ID: {e.id_envio} | Tipo: {e.tipo} | Destino: {e.destino} | "
@@ -44,14 +44,14 @@ class EnvioManager:
         for e in self.envios:
             if e.id_envio == id_envio:
                 e.estado = nuevo_estado
-                print("✏️ Envío actualizado correctamente.")
+                print("Envío actualizado correctamente.")
                 return
-        print("⚠️ Envío no encontrado.")
+        print("Envío no encontrado.")
 
     def eliminar_envio(self, id_envio):
         for e in self.envios:
             if e.id_envio == id_envio:
                 self.envios.remove(e)
-                print("🗑️ Envío eliminado correctamente.")
+                print("Envío eliminado correctamente.")
                 return
-        print("⚠️ Envío no encontrado.")
+        print("Envío no encontrado.")
